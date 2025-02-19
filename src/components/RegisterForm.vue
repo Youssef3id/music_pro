@@ -97,6 +97,9 @@
 </template>
 
 <script>
+import { mapActions, mapStores } from 'pinia'
+import useModalStore from '@/stores/modal'
+import useUserStore from '@/stores/user'
 export default {
   name: 'RegisterForm',
   data() {
@@ -119,18 +122,36 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapStores(useModalStore),
+  },
   methods: {
-    register(valuse) {
+    ...mapActions(useUserStore, {
+      createUser: 'register',
+    }),
+    async register(valuse) {
       this.reg_in_submission = true
       this.reg_show_alert = true
       this.reg_alert_variant = 'bg-blue-500'
       this.reg_alert_message = 'please wait your account is being created'
-      setTimeout(() => {
-        this.reg_alert_variant = 'bg-green-500'
-        this.reg_alert_message = 'Registered successfully'
-      }, 2000)
 
-      console.log('Registered', valuse)
+      try {
+        await this.createUser(valuse)
+      } catch (error) {
+        this.reg_alert_variant = 'bg-red-500'
+        this.reg_alert_message = 'Registration failed'
+        this.reg_in_submission = false
+        console.log('Error adding document: ', error)
+
+        return
+      }
+      setTimeout(() => {
+        this.modalStore.isOpen = !this.modalStore.isOpen
+      }, 2000)
+      this.userLoggedIn = true
+      this.reg_alert_variant = 'bg-green-500'
+      this.reg_alert_message = 'Registered successfully'
+      window.location.reload()
     },
   },
 }

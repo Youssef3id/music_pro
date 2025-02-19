@@ -17,7 +17,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
     "@vee-validate/rules": "^4.15.0",
-    "firebase": "^8.10.1",
+    "firebase": "^11.3.1",
     "pinia": "^2.3.1",
     "vee-validate": "^4.15.0",
     "vue": "^3.5.13",

@@ -21,7 +21,7 @@
             <p class="text-2xl font-bold">Your Account</p>
             <!-- Modal Close Button -->
             <div class="modal-close cursor-pointer z-50" @click="isOpen = false">
-              <i class="fas fa-times">x</i>
+              <i class="fas fa-times"></i>
             </div>
           </div>
 
