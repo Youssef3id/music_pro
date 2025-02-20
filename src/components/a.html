@@ -1,0 +1,26 @@
+<div v-if="uploadedFiles.length > 0">
+  <div v-for="(file, index) in uploadedFiles" :key="index" class="mb-4">
+    <div class="font-bold text-sm">{{ file.name }}</div>
+    <!-- Display MP3 files -->
+    <audio v-if="file.type === 'audio/mpeg'" controls class="w-full mt-2">
+      <source :src="file.url" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <!-- Display image files -->
+    <img
+      v-else-if="file.type.startsWith('image/')"
+      :src="file.url"
+      :alt="file.name"
+      class="mt-2 max-w-full h-auto"
+    />
+    <!-- Display PDF files -->
+    <iframe
+      v-else-if="file.type === 'application/pdf'"
+      :src="file.url"
+      class="w-full h-64 mt-2"
+      frameborder="0"
+    ></iframe>
+    <!-- Unsupported file type -->
+    <div v-else class="text-red-500 mt-2">Unsupported file type: {{ file.type }}</div>
+  </div>
+</div>
